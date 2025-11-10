@@ -3,8 +3,16 @@
 public class Pergunta {
   private int indexAtual;
 
-  private boolean validarResposta(String pergunta, String resposta) {
-    String respostaCerta = getResposta();
+  private String[] perguntas = {
+      "Qual é o pokémon mais forte? (Attack)",
+      "Qual é o pokémon mais defensivo? (Defense)",
+      "Qual foi o primeiro pokémon que o Ash capturou?",
+      "Qual o nome do inicial de grama da primeira geração?"
+  };
+
+  private boolean validarResposta(String resposta) {
+
+    String respostaCerta = getResposta(indexAtual);
     if (resposta == respostaCerta) {
       return true;
     } else {
@@ -31,9 +39,9 @@ public class PerguntaVerdadeiroFalse extends Pergunta {
 }
 
 class Jogador {
-  private responder() {
-        //pegar String do usuário;
-    }
+  private void responder() {
+    // pegar String do usuário;
+  }
 }
 
 public class Quiz {
@@ -72,7 +80,7 @@ public class Quiz {
       // registrarEvento(String resposta, Jogador novoJogador);
 
       boolean validacao;
-      validacao = novaPergunta.validarResposta(pergunta, resposta);
+      validacao = novaPergunta.validarResposta(resposta);
 
       // registrarEvento(String resposta);
 
@@ -92,7 +100,7 @@ class Pontuavel {
 
   public int calcularPontuacao(boolean ponto) {
     if (ponto == true) {
-      pontuacao++;
+      this.pontuacao++;
     }
   }
 }
