@@ -1,17 +1,35 @@
+import java.util.Scanner;
+
 public class Pergunta {
-  protected static int indice = -1;
-  protected String[] perguntas;
+  protected static int indice;
+  protected String pergunta;
+  protected char[] respostasCertas = {
+      'F',
+      'V',
+      'b',
+      'c',
+  };
 
   Pergunta() {
     Pergunta.indice += 1;
     if (Pergunta.indice >= 4) {
       // n deixar criar o objeto
       return;
+    } else {
+      if (Pergunta.indice == 1 || Pergunta.indice == 2) {
+        PerguntaVerdadeiroFalso p;
+        p.setPergunta();
+        this.pergunta = p.getPergunta();
+      } else {
+        PerguntaMultiplaEscolha p;
+        p.setPergunta();
+        this.pergunta = p.getPergunta();
+      }
     }
   }
 
-  protected boolean validarResposta(String resposta) {
-    String respostaCerta = getResposta(indice);
+  protected boolean validarResposta(char resposta) {
+    char respostaCerta = getResposta(Pergunta.indice);
     if (resposta == respostaCerta) {
       return true;
     } else {
@@ -19,57 +37,56 @@ public class Pergunta {
     }
   }
 
-  protected String getResposta(int indice) {
-
+  protected char getResposta(int indice) {
+    char resposta = this.respostasCertas[indice];
+    return resposta;
   }
 
-  protected String getPergunta(int indice) {
-
-  }
-
-  protected String setPergunta(String[] perguntas) {
-    this.perguntas = perguntas;
+  protected char getPergunta(int indice) {
+    System.out.println(this.pergunta);
   }
 }
 
 public class PerguntaMultiplaEscolha extends Pergunta {
+  public static int indiceLivre = 0;
+  private String pergunta;
   private String[] perguntas = {
-      "Quais os tipos que o pokémon Castform pode evoluir?",
+      "Quais os tipos das formas que o pokémon Castform pode assumir?",
       "Qual o nome da dupla de pokémons baseados nos astros celestes?"
   };
 
-  public boolean validarResposta(String resposta) {
-    super.validarResposta(resposta);
-  }
-
   public void setPergunta() {
-    super.setPergunta(this.perguntas);
+    this.pergunta = perguntas[indiceLivre];
+    PerguntaMultiplaEscolha.indiceLivre += 1;
   }
 
-  public String getPergunta(int indice) {
-    super.getPergunta(indice);
+  public String getPergunta() {
+    return this.pergunta;
   }
 }
 
-public class PerguntaVerdadeiroFalse extends Pergunta {
+public class PerguntaVerdadeiroFalso extends Pergunta {
+  public static int indiceLivre = 0;
   private String[] perguntas = {
       "A terceira geração de Pokémon se passa em Kanto.",
       "O lendário secreto de Pokémon Emerald é o Deyoxis",
   };
 
-  public boolean validarResposta(String resposta) {
-    super.validarResposta(resposta);
+  public void setPergunta() {
+    this.pergunta = perguntas[indiceLivre];
+    PerguntaVerdadeiroFalso.indiceLivre += 1;
   }
 
-  public void setPergunta() {
-    super.setPergunta(this.perguntas);
+  public String getPergunta() {
+    return this.pergunta;
   }
 }
 
+// FF: ler char com a resposta (a, b, c, d ou V, F)
 class Jogador {
-  private void responder() {
-    // pegar String do usuário;
-    return;
+  public char responder() {
+    // char resposta = (char) System.in.read();
+    return responder();
   }
 }
 
@@ -83,16 +100,12 @@ public class Quiz {
   public static void main(String[] args) {
     numeroDeQuizes++;
     int p = 0;
-    while (p < 10) {
+    Pontuavel pontosAcumulados;
+    pontosAcumulados = new Pontuavel();
 
-      // RANDOMIZAR P CHAMAR UM TIPO DE PERGUNTA E ARMAZENAR A QUANTIDADE DISPONÍVEL
-      // NO ATRIBUTO DA PERGUNTA FILHA
-
+    while (p < 4) {
       SistemaLogs log;
       log = new SistemaLogs();
-
-      Pontuavel pontosAcumulados;
-      pontosAcumulados = new Pontuavel();
 
       log.registrarEvento(pontosAcumulados);
 
@@ -107,12 +120,13 @@ public class Quiz {
       log.registrarEvento(novaPergunta);
 
       String perguntaAtual;
-      perguntaAtual = novaPergunta.setPergunta();
+      perguntaAtual = novaPergunta.pergunta;
+      System.out.println(perguntaAtual);
 
       log.registrarEvento(perguntaAtual);
 
-      String resposta;
-      // resposta = novoJogador.responder();
+      char resposta;
+      resposta = novoJogador.responder();
       log.registrarEvento(resposta, novoJogador);
 
       boolean validacao;
@@ -128,6 +142,8 @@ public class Quiz {
       pontosAcumulados.calcularPontuacao(validacao);
       p++;
     }
+    System.out.println("O quiz acabou!");
+    System.out.println("Sua pontuação foi: " + pontosAcumulados.pontuacao);
   }
 }
 
@@ -158,7 +174,7 @@ class SistemaLogs {
     System.out.println("Evento registrado");
   }
 
-  public void registrarEvento(String resposta, Jogador novoJogador) {
+  public void registrarEvento(char resposta, Jogador novoJogador) {
     System.out.println("Evento registrado");
   }
 
