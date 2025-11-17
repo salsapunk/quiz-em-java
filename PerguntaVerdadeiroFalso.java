@@ -26,6 +26,7 @@ public class PerguntaVerdadeiroFalso extends Pergunta {
   }
 
   public boolean validarResposta(String resposta) {
+    resposta.trim();
     PerguntaVerdadeiroFalso.indiceLivre += 1;
     return super.validarResposta(resposta);
   }

@@ -22,8 +22,9 @@ class Jogador {
   }
 
   public void setNome() {
+    System.out.println("Digite seu nome: ");
     this.nome = ler.nextLine();
-    if (this.nome == null || nome.isBlank()) {
+    if (this.nome == null) {
       throw new IllegalArgumentException("Nome inválido.");
     }
   }

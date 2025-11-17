@@ -2,15 +2,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 class SistemaLogs {
-  private static String agora() {
-    return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+  private static String hora() {
+    return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd--MM-yyyy HH:mm:ss"));
   }
 
   public void registrarEvento(String mensagem) {
-    System.out.println(":" + agora() + mensagem + ":");
+    System.out.println("\t\t\t~(" + hora() + " " + mensagem + ")");
   }
 
   public void registrarEvento(String mensagem, int codigo) {
-    System.out.println(":" + agora() + "Código: " + codigo + mensagem + ":");
+    System.out.println("\t\t\t~(" + hora() + " Código: " + " " + codigo + " " + mensagem + ")");
   }
 }

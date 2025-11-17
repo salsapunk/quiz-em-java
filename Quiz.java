@@ -12,33 +12,33 @@ public class Quiz {
     SistemaLogs log;
     log = new SistemaLogs();
 
-    log.registrarEvento("Sisema de logs criado");
+    log.registrarEvento("Sistema de logs criado");
 
     Jogador novoJogador;
     novoJogador = new Jogador();
-    novoJogador.setNome();
     novoJogador.setPontuacao(0);
 
     log.registrarEvento("novoJogador criado");
 
     while (p < 4) {
+      log.registrarEvento("Novo loop rodando");
       boolean validacao;
 
       if (p < 2) {
+        System.out.println("-- Pergunta de múltipla escolha --");
         PerguntaMultiplaEscolha novaPergunta;
         novaPergunta = new PerguntaMultiplaEscolha();
 
         novaPergunta.setPergunta();
         novaPergunta.setResposta();
         novaPergunta.setRespostaCerta();
-        System.out.println(novaPergunta.getRespostaCerta());
 
-        String perguntaAtual;
-        perguntaAtual = novaPergunta.getPergunta();
-        System.out.println(perguntaAtual);
+        System.out.println(novaPergunta.getPergunta());
+        System.out.println(novaPergunta.getRespostas());
 
-        log.registrarEvento("Pergunta feita", p);
+        log.registrarEvento("Pergunta feita", p + 1);
 
+        System.out.println("Digite sua resposta:");
         String resposta;
         resposta = novoJogador.responder();
         log.registrarEvento("Pergunta respondida");
@@ -46,6 +46,7 @@ public class Quiz {
         validacao = novaPergunta.validarResposta(resposta);
         log.registrarEvento("Validação feita");
       } else {
+        System.out.println("--Pergunta de (V)erdadeiro ou (F)also --");
         PerguntaVerdadeiroFalso novaPergunta;
         novaPergunta = new PerguntaVerdadeiroFalso();
 
@@ -56,8 +57,9 @@ public class Quiz {
         perguntaAtual = novaPergunta.pergunta;
         System.out.println(perguntaAtual);
 
-        log.registrarEvento("Pergunta feita", p);
+        log.registrarEvento("Pergunta feita", p + 1);
 
+        System.out.println("Digite sua resposta: ");
         String resposta;
         resposta = novoJogador.responder();
         log.registrarEvento("Resposta feita");
@@ -72,7 +74,6 @@ public class Quiz {
         System.out.println("A resposta está incorreta!");
       }
       p++;
-      log.registrarEvento("Novo loop rodando");
     }
     System.out.println("O quiz acabou!");
     System.out.println("Sua pontuação foi: " + novoJogador.getPontuacao());
